@@ -43,6 +43,9 @@ window.onload = () => {
     `;
     tbody.appendChild(row);
   }
+
+  cargarMes();
+  listarMesesGuardados();
 };
 
 function calcularTotales() {
@@ -96,4 +99,104 @@ function calcularTotales() {
   document.getElementById("totalExtras").textContent = "$" + totalExtras.toFixed(0);
   document.getElementById("componenteVariable").textContent = "$" + componenteVariable.toFixed(0);
   document.getElementById("totalVariable").textContent = "$" + totalVariable.toFixed(0);
+}
+
+// ---------- FUNCIONES DE ALMACENAMIENTO POR MES ----------
+
+function guardarMes() {
+  const mes = document.getElementById("mes").value;
+  const anio = new Date().getFullYear();
+  const clave = `registro-${anio}-${mes.toString().padStart(2, '0')}`;
+
+  const data = {
+    sueldoBase: document.getElementById("sueldoBase").value,
+    horasProgramadas: document.getElementById("horasProgramadas").value,
+    cargo: document.getElementById("cargo").value,
+    nivel: document.getElementById("nivel").value,
+    dias: []
+  };
+
+  document.querySelectorAll("#tablaDias tr").forEach(row => {
+    data.dias.push({
+      vuelo: row.querySelector(".vuelo").value,
+      ruta: row.querySelector(".ruta").value,
+      turno: row.querySelector(".turno").checked,
+      noche: row.querySelector(".noche").checked,
+      feriado: row.querySelector(".feriado").checked,
+      pax: row.querySelector(".pax").value,
+      block: row.querySelector(".block").value,
+      lavandero: row.querySelector(".lavandero").value,
+      movilizacion: row.querySelector(".movilizacion").value
+    });
+  });
+
+  localStorage.setItem(clave, JSON.stringify(data));
+  alert("Mes guardado correctamente.");
+  listarMesesGuardados();
+}
+
+function cargarMes() {
+  const mes = document.getElementById("mes").value;
+  const anio = new Date().getFullYear();
+  const clave = `registro-${anio}-${mes.toString().padStart(2, '0')}`;
+
+  const data = JSON.parse(localStorage.getItem(clave));
+  if (!data) return;
+
+  document.getElementById("sueldoBase").value = data.sueldoBase;
+  document.getElementById("horasProgramadas").value = data.horasProgramadas;
+  document.getElementById("cargo").value = data.cargo;
+  document.getElementById("nivel").value = data.nivel;
+
+  document.querySelectorAll("#tablaDias tr").forEach((row, index) => {
+    if (!data.dias[index]) return;
+    row.querySelector(".vuelo").value = data.dias[index].vuelo;
+    row.querySelector(".ruta").value = data.dias[index].ruta;
+    row.querySelector(".turno").checked = data.dias[index].turno;
+    row.querySelector(".noche").checked = data.dias[index].noche;
+    row.querySelector(".feriado").checked = data.dias[index].feriado;
+    row.querySelector(".pax").value = data.dias[index].pax;
+    row.querySelector(".block").value = data.dias[index].block;
+    row.querySelector(".lavandero").value = data.dias[index].lavandero;
+    row.querySelector(".movilizacion").value = data.dias[index].movilizacion;
+  });
+}
+
+function listarMesesGuardados() {
+  const selector = document.getElementById("selectorMeses");
+  if (!selector) return;
+  selector.innerHTML = "";
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key.startsWith("registro-")) {
+      const option = document.createElement("option");
+      option.value = key;
+      option.textContent = key.replace("registro-", "");
+      selector.appendChild(option);
+    }
+  }
+}
+
+function cargarMesDesdeSelector() {
+  const clave = document.getElementById("selectorMeses").value;
+  const data = JSON.parse(localStorage.getItem(clave));
+  if (!data) return;
+
+  document.getElementById("sueldoBase").value = data.sueldoBase;
+  document.getElementById("horasProgramadas").value = data.horasProgramadas;
+  document.getElementById("cargo").value = data.cargo;
+  document.getElementById("nivel").value = data.nivel;
+
+  document.querySelectorAll("#tablaDias tr").forEach((row, index) => {
+    if (!data.dias[index]) return;
+    row.querySelector(".vuelo").value = data.dias[index].vuelo;
+    row.querySelector(".ruta").value = data.dias[index].ruta;
+    row.querySelector(".turno").checked = data.dias[index].turno;
+    row.querySelector(".noche").checked = data.dias[index].noche;
+    row.querySelector(".feriado").checked = data.dias[index].feriado;
+    row.querySelector(".pax").value = data.dias[index].pax;
+    row.querySelector(".block").value = data.dias[index].block;
+    row.querySelector(".lavandero").value = data.dias[index].lavandero;
+    row.querySelector(".movilizacion").value = data.dias[index].movilizacion;
+  });
 }
