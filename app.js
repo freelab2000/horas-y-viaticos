@@ -1,4 +1,3 @@
-// Rango de valores viáticos por región (aún útil si luego se reintegra destino)
 const VIATICOS = {
   'america': 65,
   'nueva_york': 70,
@@ -58,14 +57,12 @@ function calcularTotales() {
   const bonusTurno = totalTurnos > 3 ? sueldoBase * 0.025 : 0;
   const bonusFeriados = totalFeriados * sueldoBase * 0.066;
 
-  // TODO: Calcular componente variable según tabla externa
-  const componenteVariable = 0;
-
+  const componenteVariable = 0; // a integrar luego según tabla
   const totalVariable = componenteVariable + bonusTurno + bonusFeriados + totalExtras;
 
   document.getElementById("horasReales").textContent = horasReales.toFixed(2);
   document.getElementById("horasValidas").textContent = horasValidas.toFixed(2);
-  document.getElementById("totalViaticos").textContent = "$0"; // temporalmente 0
+  document.getElementById("totalViaticos").textContent = "$0"; // por ahora sin cálculo
   document.getElementById("totalTurnos").textContent = totalTurnos;
   document.getElementById("totalFeriados").textContent = totalFeriados;
   document.getElementById("bonusTurno").textContent = "$" + bonusTurno.toFixed(0);
