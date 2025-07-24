@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro de Viáticos y Horas</title>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#003366" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="apple-touch-icon" href="icon-192x192.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Planilla Mensual de Viáticos y Horas</h1>
+
+    <div class="input-group">
+      <label for="sueldoBase">Sueldo base bruto ($)</label>
+      <input type="number" id="sueldoBase" />
+    </div>
+
+    <div class="input-group">
+      <label for="horasProgramadas">Horas programadas</label>
+      <input type="number" id="horasProgramadas" step="0.1" />
+    </div>
+
+    <table id="registro">
+      <thead>
+        <tr>
+          <th>Día</th><th>Vuelo</th><th>Ruta</th><th>Destino</th><th>Turno</th><th>Noche</th><th>Feriado</th>
+          <th>PAX/SIM</th><th>Horas Block</th><th>Lavandero</th><th>Movilización</th>
+        </tr>
+      </thead>
+      <tbody id="tablaDias"></tbody>
+    </table>
+
+    <button onclick="calcularTotales()">Calcular Totales</button>
+
+    <div id="resultados">
+      <h2>Resumen</h2>
+      <p>Horas reales voladas: <span id="horasReales"></span></p>
+      <p>Horas válidas para cálculo: <span id="horasValidas"></span></p>
+      <p>Viáticos totales: <span id="totalViaticos"></span></p>
+      <p>Turnos: <span id="totalTurnos"></span></p>
+      <p>Feriados volados: <span id="totalFeriados"></span></p>
+      <p>Bonificación por turnos (>3): <span id="bonusTurno"></span></p>
+      <p>Bonificación por feriados (6.6% c/u): <span id="bonusFeriados"></span></p>
+      <p>Lavandero + Movilización: <span id="totalExtras"></span></p>
+      <p><strong>Total variable estimado: <span id="totalVariable"></span></strong></p>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
