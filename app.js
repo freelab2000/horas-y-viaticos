@@ -1,4 +1,4 @@
-// Rango de valores viáticos por región
+// Rango de valores viáticos por región (aún útil si luego se reintegra destino)
 const VIATICOS = {
   'america': 65,
   'nueva_york': 70,
@@ -18,7 +18,6 @@ window.onload = () => {
       <td>${i}</td>
       <td><input type="text" class="vuelo" /></td>
       <td><input type="text" class="ruta" /></td>
-      <td><input type="text" class="destino" /></td>
       <td><input type="checkbox" class="turno" /></td>
       <td><input type="checkbox" class="noche" /></td>
       <td><input type="checkbox" class="feriado" /></td>
@@ -31,26 +30,14 @@ window.onload = () => {
   }
 };
 
-function calcularViatico(destino) {
-  if (!destino) return 0;
-  destino = destino.toLowerCase();
-  if (destino.includes("nueva york")) return VIATICOS.nueva_york;
-  if (destino.includes("europa")) return VIATICOS.europa;
-  if (destino.includes("africa")) return VIATICOS.africa;
-  if (destino.includes("asia")) return VIATICOS.asia;
-  if (destino.includes("oceania") || destino.includes("pascua")) return VIATICOS.oceania;
-  return VIATICOS.america;
-}
-
 function calcularTotales() {
   const sueldoBase = parseFloat(document.getElementById("sueldoBase").value) || 0;
   const horasProgramadas = parseFloat(document.getElementById("horasProgramadas").value) || 0;
 
   let totalPAX = 0, totalBlock = 0, totalTurnos = 0, totalFeriados = 0;
-  let totalViaticos = 0, totalExtras = 0;
+  let totalExtras = 0;
 
   document.querySelectorAll("#tablaDias tr").forEach(row => {
-    const destino = row.querySelector(".destino").value;
     const pax = parseFloat(row.querySelector(".pax").value) || 0;
     const block = parseFloat(row.querySelector(".block").value) || 0;
     const lav = parseFloat(row.querySelector(".lavandero").value) || 0;
@@ -62,7 +49,6 @@ function calcularTotales() {
     totalBlock += block;
     if (turno) totalTurnos++;
     if (feriado) totalFeriados++;
-    totalViaticos += calcularViatico(destino);
     totalExtras += lav + mov;
   });
 
@@ -79,7 +65,7 @@ function calcularTotales() {
 
   document.getElementById("horasReales").textContent = horasReales.toFixed(2);
   document.getElementById("horasValidas").textContent = horasValidas.toFixed(2);
-  document.getElementById("totalViaticos").textContent = "$" + totalViaticos.toFixed(0);
+  document.getElementById("totalViaticos").textContent = "$0"; // temporalmente 0
   document.getElementById("totalTurnos").textContent = totalTurnos;
   document.getElementById("totalFeriados").textContent = totalFeriados;
   document.getElementById("bonusTurno").textContent = "$" + bonusTurno.toFixed(0);
