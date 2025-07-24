@@ -1,0 +1,21 @@
+{
+  "name": "Horas y Viáticos App",
+  "short_name": "HorasViáticos",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#f4f7fa",
+  "theme_color": "#003366",
+  "description": "App PWA para registrar vuelos, calcular viáticos y sueldo variable.",
+  "icons": [
+    {
+      "src": "icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
