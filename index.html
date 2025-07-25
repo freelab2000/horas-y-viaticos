@@ -11,6 +11,10 @@
   <link rel="apple-touch-icon" href="icon-192x192.png" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+
+  <!-- Librerías para exportación -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
   <div class="container">
@@ -37,11 +41,6 @@
         <option value="11">Noviembre</option>
         <option value="12">Diciembre</option>
       </select>
-    </div>
-
-    <div class="input-group">
-      <label for="selectorMeses">Meses guardados</label>
-      <select id="selectorMeses" onchange="cargarMesDesdeSelector()"></select>
     </div>
 
     <div class="input-group">
@@ -89,9 +88,11 @@
       <tbody id="tablaDias"></tbody>
     </table>
 
-    <div style="display: flex; gap: 10px;">
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px;">
       <button onclick="calcularTotales()">Calcular Totales</button>
       <button onclick="guardarMes()">Guardar mes</button>
+      <button onclick="exportarPDF()">Exportar a PDF</button>
+      <button onclick="exportarExcel()">Exportar a Excel</button>
     </div>
 
     <div id="resultados">
