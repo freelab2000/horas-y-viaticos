@@ -101,7 +101,7 @@ function calcularTotales() {
   document.getElementById("totalVariable").textContent = "$" + totalVariable.toFixed(0);
 }
 
-// ---------- FUNCIONES DE ALMACENAMIENTO POR MES ----------
+// ---------- ALMACENAMIENTO ----------
 
 function guardarMes() {
   const mes = document.getElementById("mes").value;
@@ -199,4 +199,29 @@ function cargarMesDesdeSelector() {
     row.querySelector(".lavandero").value = data.dias[index].lavandero;
     row.querySelector(".movilizacion").value = data.dias[index].movilizacion;
   });
+}
+
+// ---------- EXPORTAR A EXCEL ----------
+
+function exportarExcel() {
+  let tabla = document.getElementById("registro").outerHTML;
+  let blob = new Blob(["\ufeff", tabla], { type: "application/vnd.ms-excel" });
+  let link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "registro.xls";
+  link.click();
+}
+
+// ---------- EXPORTAR A PDF ----------
+
+function exportarPDF() {
+  const tabla = document.getElementById("registro");
+  const ventana = window.open('', '', 'height=800,width=1000');
+  ventana.document.write('<html><head><title>Registro de Viáticos y Horas</title>');
+  ventana.document.write('<style>table, th, td { border: 1px solid black; border-collapse: collapse; padding: 4px; }</style>');
+  ventana.document.write('</head><body >');
+  ventana.document.write(tabla.outerHTML);
+  ventana.document.write('</body></html>');
+  ventana.document.close();
+  ventana.print();
 }
